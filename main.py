@@ -4,6 +4,8 @@ from PIL import ImageTk, Image
 from flask import Flask
 import random
 import pandas
+import matplotlib
+matplotlib.use('Agg')
 
 # --------------------- GLOBALS ---------------------
 BACKGROUND_COLOR = "#B1DDC6"
