@@ -86,11 +86,10 @@ CARD_LABELS = []
 TITLE_LABELS = []
 
 # --------------------- Flask Setup ---------------------
-app = Flask(__name__)
 
+app = Flask(__name__)
 @app.route('/')
 
-# TODO: refactor program to add type hints/type checking
 # --------------------- CARD FUNCTIONS ---------------------
 # randomly pick 3 new cards + side and store into global PICKED_CARDS
 def pick_cards():
@@ -240,4 +239,5 @@ card_label3.grid(column=2, row=2)
 
 CARD_LABELS = [card_label1, card_label2, card_label3]
 
-window.mainloop()
+if __name__ == "__main__":
+    window.mainloop()
