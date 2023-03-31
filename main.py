@@ -4,8 +4,6 @@ from PIL import ImageTk, Image
 from flask import Flask
 import random
 import pandas
-import matplotlib
-matplotlib.use('Agg')
 
 # --------------------- GLOBALS ---------------------
 BACKGROUND_COLOR = "#B1DDC6"
@@ -101,27 +99,16 @@ def pick_cards():
         side = random.choice(["A", "B"])
         PICKED_CARDS.append((card, side))
 
-
 # Create new PHOTO_IMAGES of the 3 cards and displays them
 def flip_new():
     global PHOTO_IMAGES
     PHOTO_IMAGES = []
-    # print(PICKED_CARDS)
-    # new_cards = random.sample(CARD_NAMES, 3)
     for x in range(3):
         # side = random.choice(['A', 'B'])
         new_img = ImageTk.PhotoImage(
             Image.open(f"./images/{PICKED_CARDS[x][1]}._{PICKED_CARDS[x][0]}.png").resize((224, 374)))
         canvas.itemconfig(CANVAS_IMAGES[x], image=new_img)
         PHOTO_IMAGES.append(new_img)
-    # new_img1 = ImageTk.PhotoImage(Image.open(f"./images/{new_cards[0]}").resize((224, 374)))
-    # new_img2 = ImageTk.PhotoImage(Image.open(f"./images/{new_cards[1]}").resize((224, 374)))
-    # new_img3 = ImageTk.PhotoImage(Image.open(f"./images/{new_cards[2]}").resize((224, 374)))
-    # PHOTO_IMAGES = [new_img1, new_img2, new_img3]
-    # canvas.itemconfig(canvas_img1, image=new_img1)
-    # canvas.itemconfig(canvas_img2, image=new_img2)
-    # canvas.itemconfig(canvas_img3, image=new_img3)
-
 
 # --------------------- TEXT FUNCTIONS ---------------------
 # Initializing lists of card meanings from "Tarot Cards Meanings - Sheet1.csv" file
@@ -136,7 +123,6 @@ for i in range(len(tarot_card_list)):
     card_name = tarot_card_list[i]
     tarot_dict[card_name] = {"A": side_a[i], "B": side_b[i]}
 
-
 # Shows the picked cards meanings on their text boxes
 # TODO: fixup labels to look better
 def generate_text():
@@ -145,7 +131,6 @@ def generate_text():
         title_text = f"{PICKED_CARDS[i][0].replace('_', ' ')} - {PICKED_CARDS[i][1]}"
         CARD_LABELS[i].config(text=text)
         TITLE_LABELS[i].config(text=title_text)
-
 
 # --------------------- BUTTON FUNCTIONS ---------------------
 # main function call from button press that will call the appropriate functions
@@ -157,25 +142,16 @@ def read_new_cards():
     flip_new()
     generate_text()
 
-
 # --------------------- UI SETUP ---------------------
 window = Tk()
 window.title("Tarot Card Reader")
 # TODO: add a background image
 window.config(padx=50, pady=50, bg=BACKGROUND_COLOR)
 # window.geometry("1024x720")
+
 # Canvas
 canvas = Canvas(width=1000, height=400, bg=BACKGROUND_COLOR, highlightthickness=0)
 canvas.grid(column=0, row=0, columnspan=3)
-
-# Choose random card images
-# new_cards = random.sample(CARD_NAMES, 3)
-# for x in range(0, 3):
-#     # side = random.choice(['A', 'B'])
-#     new_img = ImageTk.PhotoImage(Image.open(f"./images/{DEFAULT_CARD}").resize((224, 374)))
-#     x_cord = int(200+(x*300))
-#     canvas_img = canvas.create_image(x_cord, 200, image=new_img)
-#     CANVAS_IMAGES.append(canvas_img)
 
 # Image 1
 image1 = ImageTk.PhotoImage(Image.open(f"./images/{DEFAULT_CARD}").resize((224, 374)))
@@ -196,26 +172,6 @@ CANVAS_IMAGES = [canvas_img1, canvas_img2, canvas_img3]
 read_button = Button(text="Read", font=BUTTON_FONT, bg=COLOR4, command=read_new_cards)
 read_button.grid(column=1, row=3, padx=20, pady=20)
 
-# Text Box
-msg = "PLACEHOLDER"
-# text_box1 = Text(height=5, width=20, wrap="word", padx=10, pady=10, font=("Arial", 14))
-# text_box1.insert('end', msg)
-# text_box1.config(state="disabled")
-# text_box1.grid(column=0, row=1, columnspan=1)
-#
-# text_box2 = Text(height=5, width=20, wrap="word", padx=10, pady=10, font=("Arial", 14))
-# text_box2.insert('end', msg)
-# text_box2.config(state="disabled")
-# text_box2.grid(column=1, row=1, columnspan=1)
-#
-# text_box3 = Text(height=5, width=20, wrap="word", padx=10, pady=10, font=("Arial", 14))
-# text_box3.insert('end', msg)
-# text_box3.config(state="disabled")
-# text_box3.grid(column=2, row=1, columnspan=1)
-# # global text box list for reference in generate_text()
-# TEXT_BOX = [text_box1, text_box2, text_box3]
-
-# LABELS
 
 # LABELS
 # TODO: add card titles under each card
@@ -227,15 +183,15 @@ title_label3 = Label(width=20, height=1, padx=2, pady=2, text="", font=TITLE_FON
 title_label3.grid(column=2, row=1)
 TITLE_LABELS = [title_label1, title_label2, title_label3]
 
-card_label1 = Label(width=25, height=5, padx=10, pady=10, text=msg, font=CARD_FONT, relief="raised",
+card_label1 = Label(width=25, height=5, padx=10, pady=10, text="", font=CARD_FONT, relief="raised",
                     wraplength=250, bg=COLOR4)
 card_label1.grid(column=0, row=2)
 
-card_label2 = Label(width=25, height=5, padx=10, pady=10, text=msg, font=CARD_FONT, relief="raised",
+card_label2 = Label(width=25, height=5, padx=10, pady=10, text="", font=CARD_FONT, relief="raised",
                     wraplength=250, bg=COLOR4)
 card_label2.grid(column=1, row=2)
 
-card_label3 = Label(width=25, height=5, padx=10, pady=10, text=msg, font=CARD_FONT, relief="raised",
+card_label3 = Label(width=25, height=5, padx=10, pady=10, text="", font=CARD_FONT, relief="raised",
                     wraplength=250, bg=COLOR4)
 card_label3.grid(column=2, row=2)
 
