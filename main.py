@@ -1,6 +1,7 @@
 # --------------------- IMPORTS ---------------------
 from tkinter import *
 from PIL import ImageTk, Image
+from flask import Flask
 import random
 import pandas
 
@@ -83,6 +84,11 @@ TEXT_BOX = []
 DEFAULT_CARD = "Card_Back.png"
 CARD_LABELS = []
 TITLE_LABELS = []
+
+# --------------------- Flask Setup ---------------------
+app = Flask(__name__)
+
+@app.route('/')
 
 # TODO: refactor program to add type hints/type checking
 # --------------------- CARD FUNCTIONS ---------------------
